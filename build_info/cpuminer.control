@@ -1,0 +1,8 @@
+Package: cpuminer
+Version: @DEB_CPUMINER_V@
+Architecture: @DEB_ARCH@
+Maintainer: @DEB_MAINTAINER@
+Section: Development
+Priority: optional
+Description: A tool to mine bitcoin on-device
+Tag: purpose::console, role::developer
