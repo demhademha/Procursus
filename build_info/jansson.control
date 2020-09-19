@@ -1,0 +1,8 @@
+Package: jansson
+Version: @DEB_JANSSON_V@
+Architecture: @DEB_ARCH@
+Maintainer: @DEB_MAINTAINER@
+Section: Development
+Priority: optional
+Description: A support tool for cpuminer
+Tag: purpose::console, role::developer

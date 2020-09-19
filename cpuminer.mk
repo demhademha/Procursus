@@ -8,7 +8,7 @@ DEB_CPUMINER_V   ?= $(CPUMINER_VERSION)
 
 cpuminer-setup: setup
 	wget -q -nc -P $(BUILD_SOURCE) https://github.com/pooler/cpuminer/releases/download/v$(CPUMINER_VERSION)/pooler-cpuminer-$(CPUMINER_VERSION).tar.gz
-	$(call EXTRACT_TAR,cpuminer-$(CPUMINER_VERSION).tar.gz,cpuminer-$(CPUMINER_VERSION),cpuminer)
+	$(call EXTRACT_TAR,pooler-cpuminer-$(CPUMINER_VERSION).tar.gz,cpuminer-$(CPUMINER_VERSION),cpuminer)
 
 	
 ifneq ($(wildcard $(BUILD_WORK)/cpuminer/.build_complete),)
@@ -16,8 +16,10 @@ cpuminer:
 	@echo "Using previously built cpuminer."
 else
 cpuminer: cpuminer-setup
-	cd $(BUILD_WORK)/cpuminer && ./autogen.sh \
-		--host=$(GNU_HOST_TRIPLE) \
+	cd $(BUILD_WORK)/cpuminer && ./configure \
+		--host=aarch64-apple-darwin \
+		--build=aarch64-apple-darwin \
+		--target=aarch64-apple-darwin \ 
 		--prefix=/usr 
 	+$(MAKE) -C $(BUILD_WORK)/cpuminer
 	+$(MAKE) -C $(BUILD_WORK)/cpuminer c \
