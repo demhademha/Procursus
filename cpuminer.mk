@@ -15,18 +15,16 @@ ifneq ($(wildcard $(BUILD_WORK)/cpuminer/.build_complete),)
 cpuminer:
 	@echo "Using previously built cpuminer."
 else
-cpuminer: cpuminer-setup
+cpuminer: cpuminer-setup curl jansson 
 	cd $(BUILD_WORK)/cpuminer && ./configure \
-		--host=aarch64-apple-darwin \
-		--build=aarch64-apple-darwin \
-		--target=aarch64-apple-darwin \ 
-		--prefix=/usr 
-	+$(MAKE) -C $(BUILD_WORK)/cpuminer
-	+$(MAKE) -C $(BUILD_WORK)/cpuminer c \
+	--host=$(GNU_HOST_TRIPLE) \
+	--prefix=/usr \
+	--disable-assembly
+	+$(MAKE) -C $(BUILD_WORK)/cpuminer install \
 		DESTDIR="$(BUILD_STAGE)/cpuminer"
 	+$(MAKE) -C $(BUILD_WORK)/cpuminer install \
 		DESTDIR="$(BUILD_BASE)"
-	touch $(BUILD_WORK)/cpuminer/.build_complete
+	touch $(BUILD_WORK)/cpuminer.build_complete
 endif
 
 cpuminer-package: cpuminer-stage

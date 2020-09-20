@@ -1,0 +1,138 @@
+Rebuild cpuminer
+if [ cpuminer = "all" ] || [ cpuminer = "package" ]; then \
+	rm -rf /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600 /home/ahmed/procursus_utils/build/build_stage/iphoneos-arm64/1600; \
+	git submodule foreach --recursive git clean -xfd; \
+	git submodule foreach --recursive git reset --hard; \
+	rm -f darwintools/.build_complete; \
+	make -C darwintools clean; \
+fi
+if [ -d /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600/cpuminer ]; then \
+	rm -rf {/home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600,/home/ahmed/procursus_utils/build/build_stage/iphoneos-arm64/1600}/cpuminer; \
+elif [ -d cpuminer ]; then \
+	cd cpuminer && git clean -xfd && git reset; \
+fi
+rm -rf /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600/cpuminer*patches
+rm -rf /home/ahmed/procursus_utils/build/build_stage/iphoneos-arm64/1600/cpuminer
+make cpuminer
+mkdir -p \
+	/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600 /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/{System/Library/Frameworks,usr/{include/{bsm,os,sys,IOKit,libkern,mach/machine},lib}} \
+	/home/ahmed/procursus_utils/build/build_source /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600 /home/ahmed/procursus_utils/build/build_stage/iphoneos-arm64/1600 /home/ahmed/procursus_utils/build/build_dist/iphoneos-arm64/1600 /home/ahmed/procursus_utils/build/build_strap/iphoneos-arm64/1600
+Using previously built curl.
+Using previously built jansson.
+git submodule update --init --recursive
+wget -q -nc -P /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include \
+	https://opensource.apple.com/source/xnu/xnu-6153.61.1/libsyscall/wrappers/spawn/spawn.h
+wget -q -nc -P /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/mach/machine \
+	https://opensource.apple.com/source/xnu/xnu-6153.81.5/osfmk/mach/machine/thread_state.h
+wget -q -nc -P /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/bsm \
+	https://opensource.apple.com/source/xnu/xnu-6153.81.5/bsd/bsm/audit_kevents.h
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/usr/include/{arpa,net,xpc} /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/usr/include/libkern/OSTypes.h /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/libkern
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/usr/include/sys/{tty*,proc*,ptrace,kern*,random,vnode}.h /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/sys
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/System/Library/Frameworks/IOKit.framework/Headers/* /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/IOKit
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/usr/include/{ar,launch,libproc,tzfile}.h /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/usr/include/mach/{*.defs,{mach_vm,shared_region}.h} /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/mach
+cp -af /home/ahmed/procursus_utils/SDKs/MacOSX.sdk/usr/include/mach/machine/*.defs /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/mach/machine
+cp -af /home/ahmed/Procursus/build_info/availability.h /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/os
+cp -af /home/ahmed/Procursus/build_info/IOKit.framework.iphoneos /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks/IOKit.framework
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/stdlib.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/stdlib.h
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/time.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/time.h
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/unistd.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/unistd.h
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/mach/task.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/mach/task.h
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/mach/mach_host.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/mach/mach_host.h
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/ucontext.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/ucontext.h
+sed -E s/'__IOS_PROHIBITED|__TVOS_PROHIBITED|__WATCHOS_PROHIBITED'//g < /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk/usr/include/signal.h > /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include/signal.h
+Makeflags: -j4 --jobserver-auth=3,4 --no-print-directory
+Path: /home/ahmed/Procursus/build_tools:/home/ahmed/Procursus/build_tools:/home/ahmed/procursus_utils/cctools-src/usage_examples/ios_toolchain/target/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/ahmed/osxcross/target/bin:/snap/bin
+wget -q -nc -P /home/ahmed/procursus_utils/build/build_source https://github.com/pooler/cpuminer/releases/download/v2.5.1/pooler-cpuminer-2.5.1.tar.gz
+if [ ! -d /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600/cpuminer ] || [ "" = "1" ]; then cd /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600 && tar -xf /home/ahmed/procursus_utils/build/build_source/pooler-cpuminer-2.5.1.tar.gz && mkdir -p cpuminer; cp -af cpuminer-2.5.1/. cpuminer; rm -rf cpuminer-2.5.1; fi; find /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr -name "*.la" -type f -delete
+cd /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600/cpuminer && ./configure \
+--host=aarch64-apple-darwin \
+--prefix=/usr 
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... aarch64-apple-darwin
+checking target system type... aarch64-apple-darwin
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for aarch64-apple-darwin-strip... aarch64-apple-darwin-strip
+checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether make supports the include directive... yes (GNU style)
+checking for aarch64-apple-darwin-gcc... aarch64-apple-darwin-clang
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... yes
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether aarch64-apple-darwin-clang accepts -g... yes
+checking for aarch64-apple-darwin-clang option to accept ISO C89... none needed
+checking whether aarch64-apple-darwin-clang understands -c and -o together... yes
+checking dependency style of aarch64-apple-darwin-clang... gcc3
+checking for aarch64-apple-darwin-clang option to accept ISO C99... none needed
+checking how to run the C preprocessor... aarch64-apple-darwin-clang -E
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking whether aarch64-apple-darwin-clang needs -traditional... no
+checking dependency style of aarch64-apple-darwin-clang... gcc3
+checking for aarch64-apple-darwin-ranlib... aarch64-apple-darwin-ranlib
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking sys/endian.h usability... no
+checking sys/endian.h presence... no
+checking for sys/endian.h... no
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for sys/sysctl.h... yes
+checking whether be32dec is declared... no
+checking whether le32dec is declared... no
+checking whether be32enc is declared... no
+checking whether le32enc is declared... no
+checking for size_t... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for getopt_long... yes
+checking for json_loads in -ljansson... yes
+checking for pthread_create in -lpthread... yes
+checking for gawk... (cached) gawk
+checking for curl-config... /usr/bin/curl-config
+checking for the version of libcurl... 7.68.0
+checking for libcurl >= version 7.15.2... yes
+checking whether libcurl is usable... yes
+checking for curl_free... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating compat/Makefile
+config.status: creating compat/jansson/Makefile
+config.status: creating cpuminer-config.h
+config.status: executing depfiles commands
+make -C /home/ahmed/procursus_utils/build/build_work/iphoneos-arm64/1600/cpuminer install \
+	DESTDIR="/home/ahmed/procursus_utils/build/build_stage/iphoneos-arm64/1600/cpuminer"
+Making install in compat
+make[5]: Nothing to be done for 'install-exec-am'.
+make[5]: Nothing to be done for 'install-data-am'.
+aarch64-apple-darwin-clang -DHAVE_CONFIG_H -I.   -pthread -O2 -arch arm64 -miphoneos-version-min=13.0 -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -fno-strict-aliasing -O2 -arch arm64  -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -miphoneos-version-min=13.0 -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -F/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks -MT minerd-cpu-miner.o -MD -MP -MF .deps/minerd-cpu-miner.Tpo -c -o minerd-cpu-miner.o `test -f 'cpu-miner.c' || echo './'`cpu-miner.c
+aarch64-apple-darwin-clang -DHAVE_CONFIG_H -I.   -pthread -O2 -arch arm64 -miphoneos-version-min=13.0 -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -fno-strict-aliasing -O2 -arch arm64  -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -miphoneos-version-min=13.0 -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -F/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks -MT minerd-util.o -MD -MP -MF .deps/minerd-util.Tpo -c -o minerd-util.o `test -f 'util.c' || echo './'`util.c
+aarch64-apple-darwin-clang -DHAVE_CONFIG_H -I.   -pthread -O2 -arch arm64 -miphoneos-version-min=13.0 -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -fno-strict-aliasing -O2 -arch arm64  -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -miphoneos-version-min=13.0 -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -F/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks -MT minerd-sha2.o -MD -MP -MF .deps/minerd-sha2.Tpo -c -o minerd-sha2.o `test -f 'sha2.c' || echo './'`sha2.c
+aarch64-apple-darwin-clang -DHAVE_CONFIG_H -I.   -pthread -O2 -arch arm64 -miphoneos-version-min=13.0 -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -fno-strict-aliasing -O2 -arch arm64  -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -miphoneos-version-min=13.0 -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -F/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks -MT minerd-scrypt.o -MD -MP -MF .deps/minerd-scrypt.Tpo -c -o minerd-scrypt.o `test -f 'scrypt.c' || echo './'`scrypt.c
+mv -f .deps/minerd-scrypt.Tpo .deps/minerd-scrypt.Po
+mv -f .deps/minerd-util.Tpo .deps/minerd-util.Po
+mv -f .deps/minerd-cpu-miner.Tpo .deps/minerd-cpu-miner.Po
+mv -f .deps/minerd-sha2.Tpo .deps/minerd-sha2.Po
+aarch64-apple-darwin-clang -fno-strict-aliasing -O2 -arch arm64  -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -miphoneos-version-min=13.0 -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/include -isystem /home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/include -F/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks -pthread -O2 -arch arm64  -isysroot /home/ahmed/procursus_utils/SDKs/iPhoneOS13.2.sdk -miphoneos-version-min=13.0 -L/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/lib -L/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/usr/local/lib -F/home/ahmed/procursus_utils/build/build_base/iphoneos-arm64/1600/System/Library/Frameworks -o minerd minerd-cpu-miner.o minerd-util.o minerd-sha2.o minerd-scrypt.o     -lcurl -ljansson -lpthread  

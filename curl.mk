@@ -49,4 +49,4 @@ curl-package: curl-stage
 	# curl.mk Build cleanup
 	rm -rf $(BUILD_DIST)/curl
 
-.PHONY: curl curl-package
+	.PHONY: curl curl-package
