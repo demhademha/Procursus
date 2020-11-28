@@ -1,0 +1,9 @@
+Package: lua
+Version: @DEB_LUA_V@
+Architecture: @DEB_ARCH@
+Maintainer: @DEB_MAINTAINER@
+Section: Utilities
+Priority: optional
+Description: idk yet
+Tag: purpose::console, role::developer
+
