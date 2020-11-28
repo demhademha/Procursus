@@ -20,8 +20,8 @@ MEMO_CFVER           ?= 1600
 # iOS 13.0 == 1665.15.
 CFVER_WHOLE          := $(shell echo $(MEMO_CFVER) | cut -d. -f1)
 
-ifeq ($(shell [ "$(CFVER_WHOLE)" -ge 1100 ] && [ "$(CFVER_WHOLE)" -lt 1200 ] && echo 1),1)
-IPHONE_MIN           := 8.0
+ifeq ($(shell [ "$(CFVER_WHOLE)" -ge 400 ] && [ "$(CFVER_WHOLE)" -lt 500 ] && echo 1),1)
+IPHONE_MIN           := 2.0
 TVOS_MIN             := XXX
 WATCH_MIN            := 1.0
 override MEMO_CFVER  := 1100
