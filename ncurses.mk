@@ -23,7 +23,8 @@ ncurses: ncurses-setup
 	fi
 	cd $(BUILD_WORK)/ncurses && $(EXTRA) \
 		./configure -C \
-		--host=$(GNU_HOST_TRIPLE) \
+	--build=aarch64-apple-darwin \
+		--host=aarch64-apple-darwin \
 		--prefix=/usr \
 		--with-build-cc=clang \
 		--with-shared \

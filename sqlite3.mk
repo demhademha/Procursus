@@ -3,7 +3,7 @@ $(error Use the main Makefile)
 endif
 
 SUBPROJECTS      += sqlite3
-SQLITE3_VERSION  := 3.33.0
+SQLITE3_VERSION  := 3.34.0
 DEB_SQLITE3_V    ?= $(SQLITE3_VERSION)
 
 sqlite3-setup: setup
@@ -19,7 +19,8 @@ sqlite3:
 else
 sqlite3: sqlite3-setup ncurses readline
 	cd $(BUILD_WORK)/sqlite3 && ./configure -C \
-		--host=$(GNU_HOST_TRIPLE) \
+	--build=aarch64-apple-darwin \
+		--host=aarch64-apple-darwin \
 		--prefix=/usr \
 		--enable-readline \
 		--disable-editline \

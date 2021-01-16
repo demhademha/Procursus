@@ -17,7 +17,8 @@ readline:
 else
 readline: readline-setup ncurses
 	cd $(BUILD_WORK)/readline && ./configure -C \
-		--host=$(GNU_HOST_TRIPLE) \
+	--build=aarch64-apple-darwin \
+		--host=aarch64-apple-darwin \
 		--prefix=/usr \
 		ac_cv_type_sig_atomic_t=no \
 		LDFLAGS="$(CLFLAGS) $(LDFLAGS)"
